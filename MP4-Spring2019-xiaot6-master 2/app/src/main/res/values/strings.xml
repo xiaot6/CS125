@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Molecule 125</string>
+    <string name="title_activity_molecule">MoleculeActivity</string>
+    <string name="molecule_formula">Molecule\'s Formula</string>
+    <string name="molecule_name">Molecule\'s name</string>
+    <string name="button_next">Next</string>
+    <string name="button_prev">Prev</string>
+    <string name="molecule_mass">Atomic Mass</string>
+    <string name="color_switch">Color</string>
+</resources>

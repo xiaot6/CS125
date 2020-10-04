@@ -1,0 +1,128 @@
+name: "MP2"
+semester: "Spring2019"
+version: 1.0.0
+package: "edu.illinois.cs.cs125.spring2019.mp2.lib"
+grading:
+  timeout: PT5M
+  run: "docker run --rm -m 512MB --cpus=1.0 --network none -v {{ gradeDir }}:/base cs125/mp2-spring2019-grader:0.1 -Pgrade.capture -Pgrade.reporting.file=grade.json"
+  ignoreOutput:
+    - "^WARNING: Your kernel does not support swap limit capabilities or the cgroup is not mounted.*"
+    - "^To honour the JVM settings for this build.*"
+    - "^Daemon will be stopped at the end of the build.*"
+    - "^> Configure.*"
+    - "^WARNING: The option setting 'android.enableUnitTestBinaryResources=true' is experimental and unsupported\\.$"
+    - "^The current default is 'false'\\.$"
+    - "^> Task .*"
+    - "^> Transform .*"
+scoring:
+  max: 100
+  selectors:
+    - checkstyle
+    - test
+forceCommitAfterPoints: true
+vcs:
+  git: true
+students:
+  location: email.txt
+  require: true
+  count: 1
+  suffix: "@illinois.edu"
+tasks:
+  - "lib:test"
+  - "app:testDebugUnitTest"
+reporting:
+  post: "https://cs125-reporting.cs.illinois.edu/progress"
+notes:
+  "Note that the maximum local grade is 90/100. 10 points will be provided
+  during official grading if you have submitted code that earns at least 50
+  points by Monday 2/25/2019 at 5PM."
+checkstyle:
+  name: "checkstyle Tests"
+  missing:
+    score: 0
+    message: "checkstyle crashed due to a syntax error"
+    name: "checkstyle"
+  selectors:
+    - selector: "count(//file/error) = 0"
+      score: 10
+      message: "No checkstyle errors were reported"
+      name: "checkstyle"
+    - selector: "count(//file/error) > 0"
+      score: 0
+      message: "checkstyle errors were reported"
+      name: "checkstyle"
+test:
+  name: "testNG Tests"
+  selectors:
+    - selector: "count(//testcase[@name='testGetAndSetWidth']) = 1 and count(//testcase[@name='testGetAndSetWidth']//failure) > 0"
+      score: 0
+      message: "testGetAndSetWidth failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetWidth']) = 1 and count(//testcase[@name='testGetAndSetWidth']//failure) = 0"
+      score: 5
+      message: "testGetAndSetWidth succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetHeight']) = 1 and count(//testcase[@name='testGetAndSetHeight']//failure) > 0"
+      score: 0
+      message: "testGetAndSetHeight failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetHeight']) = 1 and count(//testcase[@name='testGetAndSetHeight']//failure) = 0"
+      score: 5
+      message: "testGetAndSetHeight succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetN']) = 1 and count(//testcase[@name='testGetAndSetN']//failure) > 0"
+      score: 0
+      message: "testGetAndSetN failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetN']) = 1 and count(//testcase[@name='testGetAndSetN']//failure) = 0"
+      score: 5
+      message: "testGetAndSetN succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testConstructors']) = 1 and count(//testcase[@name='testConstructors']//failure) > 0"
+      score: 0
+      message: "testConstructors failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testConstructors']) = 1 and count(//testcase[@name='testConstructors']//failure) = 0"
+      score: 10
+      message: "testConstructors succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetBoard']) = 1 and count(//testcase[@name='testGetAndSetBoard']//failure) > 0"
+      score: 0
+      message: "testGetAndSetBoard failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testGetAndSetBoard']) = 1 and count(//testcase[@name='testGetAndSetBoard']//failure) = 0"
+      score: 15
+      message: "testGetAndSetBoard succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testWinner']) = 1 and count(//testcase[@name='testWinner']//failure) > 0"
+      score: 0
+      message: "testWinner failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testWinner']) = 1 and count(//testcase[@name='testWinner']//failure) = 0"
+      score: 10
+      message: "testWinner succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testStaticMethods']) = 1 and count(//testcase[@name='testStaticMethods']//failure) > 0"
+      score: 0
+      message: "testStaticMethods failed"
+      name: "Library"
+    - selector: "count(//testcase[@name='testStaticMethods']) = 1 and count(//testcase[@name='testStaticMethods']//failure) = 0"
+      score: 10
+      message: "testStaticMethods succeeded"
+      name: "Library"
+    - selector: "count(//testcase[@name='testTileClicks']) = 1 and count(//testcase[@name='testTileClicks']//failure) > 0"
+      score: 0
+      message: "testTileClicks failed"
+      name: "App"
+    - selector: "count(//testcase[@name='testTileClicks']) = 1 and count(//testcase[@name='testTileClicks']//failure) = 0"
+      score: 10
+      message: "testTileClicks succeeded"
+      name: "App"
+    - selector: "count(//testcase[@name='testWinnerLabel']) = 1 and count(//testcase[@name='testWinnerLabel']//failure) > 0"
+      score: 0
+      message: "testWinnerLabel failed"
+      name: "App"
+    - selector: "count(//testcase[@name='testWinnerLabel']) = 1 and count(//testcase[@name='testWinnerLabel']//failure) = 0"
+      score: 10
+      message: "testWinnerLabel succeeded"
+      name: "App"

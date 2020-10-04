@@ -1,0 +1,136 @@
+name: "MP4"
+semester: "Spring2019"
+version: 1.0.0
+package: "edu.illinois.cs.cs125.spring2019.mp4.lib"
+grading:
+  timeout: PT5M
+  run: "docker run --rm -m 512MB --cpus=1.0 --network none -v {{ gradeDir }}:/base cs125/mp4-spring2019-grader:0.1 -Pgrade.capture -Pgrade.reporting.file=grade.json"
+  ignoreOutput:
+    - "^WARNING: Your kernel does not support swap limit capabilities or the cgroup is not mounted.*"
+    - "^To honour the JVM settings for this build.*"
+    - "^Daemon will be stopped at the end of the build.*"
+    - "^> Configure.*"
+    - "^WARNING: The option setting 'android.enableUnitTestBinaryResources=true' is experimental and unsupported\\.$"
+    - "^The current default is 'false'\\.$"
+    - "^> Task .*"
+    - "^> Transform .*"
+scoring:
+  max: 110
+  selectors:
+    - checkstyle
+    - test
+forceCommitAfterPoints: true
+vcs:
+  git: true
+students:
+  location: email.txt
+  require: true
+  count: 1
+  suffix: "@illinois.edu"
+tasks:
+  - "lib:test"
+  - "app:testDebugUnitTest"
+reporting:
+  post: "https://cs125-reporting.cs.illinois.edu/progress"
+notes:
+  "Note that the maximum local grade (including extra credit) is 100/100.
+  10 points will be provided during official grading if you have pushed
+  code that earns at least 40 points by Monday, April 8 at 5PM."
+checkstyle:
+  name: "checkstyle Tests"
+  missing:
+    score: 0
+    message: "checkstyle crashed due to a syntax error"
+    name: "checkstyle"
+  selectors:
+    - selector: "count(//file/error) = 0"
+      score: 10
+      message: "No checkstyle errors were reported"
+      name: "checkstyle"
+    - selector: "count(//file/error) > 0"
+      score: 0
+      message: "checkstyle errors were reported"
+      name: "checkstyle"
+test:
+  name: "testNG Tests"
+  selectors:
+    - selector: "count(//testsuite[@name='edu.illinois.cs.cs125.spring2019.mp4.lib.MoleculeAnalyzerTest']) = 0"
+      score: 0
+      message: "MoleculeAnalyzerTest didn't compile"
+      name: "MoleculeAnalyzerTest"
+    - selector: "count(//testcase[@name='testMolecularWeight']) = 1 and count(//testcase[@name='testMolecularWeight']//failure) = 0"
+      score: 10
+      message: "testMolecularWeight succeeded"
+      name: "Analysis: weight"
+    - selector: "count(//testcase[@name='testMolecularWeight']) = 1 and count(//testcase[@name='testMolecularWeight']//failure) > 0"
+      score: 0
+      message: "testMolecularWeight failed"
+      name: "Analysis: weight"
+    - selector: "count(//testcase[@name='testHasCharged']) = 1 and count(//testcase[@name='testHasCharged']//failure) = 0"
+      score: 10
+      message: "testHasCharged succeeded"
+      name: "Analysis: charge"
+    - selector: "count(//testcase[@name='testHasCharged']) = 1 and count(//testcase[@name='testHasCharged']//failure) > 0"
+      score: 0
+      message: "testHasCharged failed"
+      name: "Analysis: charge"
+    - selector: "count(//testcase[@name='testNamingSimpleStraight']) = 1 and count(//testcase[@name='testNamingSimpleStraight']//failure) = 0"
+      score: 20
+      message: "testNamingSimpleStraight succeeded"
+      name: "Straight chain"
+    - selector: "count(//testcase[@name='testNamingSimpleStraight']) = 1 and count(//testcase[@name='testNamingSimpleStraight']//failure) > 0"
+      score: 0
+      message: "testNamingSimpleStraight failed"
+      name: "Straight chain"
+    - selector: "count(//testcase[@name='testNamingSimpleCyclic']) = 1 and count(//testcase[@name='testNamingSimpleCyclic']//failure) = 0"
+      score: 15
+      message: "testNamingSimpleCyclic succeeded"
+      name: "Simple cycle"
+    - selector: "count(//testcase[@name='testNamingSimpleCyclic']) = 1 and count(//testcase[@name='testNamingSimpleCyclic']//failure) > 0"
+      score: 0
+      message: "testNamingSimpleCyclic failed"
+      name: "Simple cycle"
+    - selector: "count(//testcase[@name='testNamingOneSubstituentCyclic']) = 1 and count(//testcase[@name='testNamingOneSubstituentCyclic']//failure) = 0"
+      score: 10
+      message: "testNamingOneSubstituentCyclic succeeded"
+      name: "One-sub cycle"
+    - selector: "count(//testcase[@name='testNamingOneSubstituentCyclic']) = 1 and count(//testcase[@name='testNamingOneSubstituentCyclic']//failure) > 0"
+      score: 0
+      message: "testNamingOneSubstituentCyclic failed"
+      name: "One-sub cycle"
+    - selector: "count(//testcase[@name='testNamingOneSubstituentLinear']) = 1 and count(//testcase[@name='testNamingOneSubstituentLinear']//failure) = 0"
+      score: 10
+      message: "testNamingOneSubstituentLinear succeeded"
+      name: "One-sub linear"
+    - selector: "count(//testcase[@name='testNamingOneSubstituentLinear']) = 1 and count(//testcase[@name='testNamingOneSubstituentLinear']//failure) > 0"
+      score: 0
+      message: "testNamingOneSubstituentLinear failed"
+      name: "One-sub linear"
+    - selector: "count(//testcase[@name='testNamingMultipleSubstituents']) = 1 and count(//testcase[@name='testNamingMultipleSubstituents']//failure) = 0"
+      score: 5
+      message: "testNamingMultipleSubstituents succeeded"
+      name: "Multiple/mixed subs"
+    - selector: "count(//testcase[@name='testNamingMultipleSubstituents']) = 1 and count(//testcase[@name='testNamingMultipleSubstituents']//failure) > 0"
+      score: 0
+      message: "testNamingMultipleSubstituents failed"
+      name: "Multiple/mixed subs"
+    - selector: "count(//testcase[@name='testNamingPriority']) = 1 and count(//testcase[@name='testNamingPriority']//failure) = 0"
+      score: 5
+      message: "testNamingPriority succeeded"
+      name: "Priority tiebreak"
+    - selector: "count(//testcase[@name='testNamingPriority']) = 1 and count(//testcase[@name='testNamingPriority']//failure) > 0"
+      score: 0
+      message: "testNamingPriority failed"
+      name: "Priority tiebreak"
+    - selector: "count(//testsuite[@name='edu.illinois.cs.cs125.spring2019.mp4.MoleculeAppTest']) = 0"
+      score: 0
+      message: "MoleculeAppTest didn't compile"
+      name: "MoleculeAppTest"
+    - selector: "count(//testcase[@name='testSharedPreferences']) = 1 and count(//testcase[@name='testSharedPreferences']//failure) = 0"
+      score: 5
+      message: "testSharedPreferences succeeded"
+      name: "App"
+    - selector: "count(//testcase[@name='testSharedPreferences']) = 1 and count(//testcase[@name='testSharedPreferences']//failure) > 0"
+      score: 0
+      message: "testSharedPreferences failed"
+      name: "App"

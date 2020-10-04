@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetupActivity">
+
+    <TableLayout
+        android:id="@+id/setup_section_players"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/setup_section_board"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/edit_player1_name"
+                android:text="@string/player1_name_label" />
+
+            <EditText
+                android:id="@+id/edit_player1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ems="9"
+                android:inputType="text"
+                android:text="@string/player1_name_default" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/edit_player2_name"
+                android:text="@string/player2_name_label" />
+
+            <EditText
+                android:id="@+id/edit_player2_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ems="9"
+                android:inputType="text"
+                android:text="@string/player2_name_default" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/setup_section_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/setup_section_start"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setup_section_players">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/edit_board_width"
+                android:text="@string/width_label" />
+
+            <EditText
+                android:id="@+id/edit_board_width"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ems="3"
+                android:inputType="number"
+                android:text="@string/width_default" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/edit_board_height"
+                android:text="@string/height_label" />
+
+            <EditText
+                android:id="@+id/edit_board_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ems="3"
+                android:inputType="number"
+                android:text="@string/height_default" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/edit_board_n"
+                android:text="@string/n_label" />
+
+            <EditText
+                android:id="@+id/edit_board_n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ems="3"
+                android:inputType="number"
+                android:text="@string/n_default" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/setup_section_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setup_section_board" >
+
+        <TextView
+            android:id="@+id/invalid_setup_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invalid_setup_text"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_button_text" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

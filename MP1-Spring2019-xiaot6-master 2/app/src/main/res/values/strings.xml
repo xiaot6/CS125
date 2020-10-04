@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CS 125 MP1</string>
+    <string name="current_image">Current Image</string>
+    <string name="open_file">Open File</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="download_file">Download File</string>
+    <string name="rotate_left">Rotate Left</string>
+    <string name="rotate_right">Rotate Right</string>
+    <string name="shift_left">Shift Left</string>
+    <string name="shift_right">Shift Right</string>
+    <string name="shift_up">Shift Up</string>
+    <string name="shift_down">Shift Down</string>
+    <string name="flip_vertical">Flip Vertical</string>
+    <string name="flip_horizontal">Flip Horizontal</string>
+    <string name="expand">Expand</string>
+    <string name="shrink">Shrink</string>
+    <string name="green_screen">Green Screen</string>
+    <string name="set_cornfield_background">Set Cornfield Background</string>
+    <string name="set_datacenter_background">Set Datacenter Background</string>
+    <string name="set_bon_iver_background">Set Bon Iver Background</string>
+    <string name="set_facebook_background">Set Facebook Background</string>
+    <string name="set_memorial_stadium_background">Set Memorial Stadium Background</string>
+    <string name="set_siebel_background">Set Siebel Background</string>
+    <string name="set_taj_mahal_background">Set Taj Mahal Background</string>
+    <string name="clear_foreground_image">Clear Foreground Image</string>
+    <string name="clear_background_image">Clear Background Image</string>
+    <string name="save_file">Save File</string>
+</resources>

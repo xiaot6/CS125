@@ -1,0 +1,112 @@
+name: "MP1"
+semester: "Spring2019"
+version: 1.0.0
+package: "edu.illinois.cs.cs125.spring2019.mp1.lib"
+grading:
+  timeout: PT5M
+  run: "docker run --rm -m 512MB --cpus=1.0 --network none -v {{ gradeDir }}:/base cs125/mp1-spring2019-grader:0.1 -Pgrade.capture -Pgrade.reporting.file=grade.json"
+  ignoreOutput:
+    - "^WARNING: Your kernel does not support swap limit capabilities or the cgroup is not mounted.*"
+    - "^To honour the JVM settings for this build.*"
+    - "^Daemon will be stopped at the end of the build.*"
+    - "^> Configure.*"
+    - "^WARNING: The option setting 'android.enableUnitTestBinaryResources=true' is experimental and unsupported\\.$"
+    - "^The current default is 'false'\\.$"
+    - "^> Task .*"
+    - "^> Transform .*"
+scoring:
+  max: 100
+  selectors:
+    - checkstyle
+    - test
+forceCommitAfterPoints: true
+vcs:
+  git: true
+students:
+  location: email.txt
+  require: true
+  count: 1
+  suffix: "@illinois.edu"
+tasks:
+  - "lib:test"
+  - "app:testDebugUnitTest"
+reporting:
+  post: "https://cs125-reporting.cs.illinois.edu/progress"
+notes:
+  "Note that the maximum local grade is 90/100. 10 points will be provided
+  during official grading if you have submitted code that earns at least 50
+  points by Monday 2/11/2019 at 5PM."
+checkstyle:
+  name: "checkstyle Tests"
+  missing:
+    score: 0
+    message: "checkstyle crashed due to a syntax error"
+    name: "checkstyle"
+  selectors:
+    - selector: "count(//file/error) = 0"
+      score: 10
+      message: "No checkstyle errors were reported"
+      name: "checkstyle"
+    - selector: "count(//file/error) > 0"
+      score: 0
+      message: "checkstyle errors were reported"
+      name: "checkstyle"
+test:
+  name: "testNG Tests"
+  selectors:
+    - selector: "count(//testsuite[@name='edu.illinois.cs.cs125.spring2019.mp1.lib.TransformTest']) = 0"
+      score: 0
+      message: "TransformTest didn't compile"
+      name: "Transform"
+    - selector: "count(//testsuite[@name='edu.illinois.cs.cs125.spring2019.mp1.ImageAppTest']) = 0"
+      score: 0
+      message: "ImageAppTest didn't compile"
+      name: "App"
+    - selector: "count(//testcase[@name='testGreenScreen']) = 1 and count(//testcase[@name='testGreenScreen']//failure) > 0"
+      score: 0
+      message: "testGreenScreen failed"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testGreenScreen']) = 1 and count(//testcase[@name='testGreenScreen']//failure) = 0"
+      score: 10
+      message: "testGreenScreen succeeded"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testPositionShifts']) = 1 and count(//testcase[@name='testPositionShifts']//failure) > 0"
+      score: 0
+      message: "testPositionShifts failed"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testPositionShifts']) = 1 and count(//testcase[@name='testPositionShifts']//failure) = 0"
+      score: 15
+      message: "testPositionShifts succeeded"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testExpand']) = 1 and count(//testcase[@name='testExpand']//failure) > 0"
+      score: 0
+      message: "testExpand failed"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testExpand']) = 1 and count(//testcase[@name='testExpand']//failure) = 0"
+      score: 15
+      message: "testExpand succeeded"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testRotateAndFlip']) = 1 and count(//testcase[@name='testRotateAndFlip']//failure) > 0"
+      score: 0
+      message: "testRotateAndFlip failed"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testRotateAndFlip']) = 1 and count(//testcase[@name='testRotateAndFlip']//failure) = 0"
+      score: 20
+      message: "testRotateAndFlip succeeded"
+      name: "Transform"
+    - selector: "count(//testcase[@name='testExpandIcon']) = 1 and count(//testcase[@name='testExpandIcon']//failure) > 0"
+      score: 0
+      message: "testExpandIcon failed"
+      name: "App"
+    - selector: "count(//testcase[@name='testExpandIcon']) = 1 and count(//testcase[@name='testExpandIcon']//failure) = 0"
+      score: 5
+      message: "testExpandIcon succeeded"
+      name: "App"
+    - selector: "count(//testcase[@name='testFlipButtons']) = 1 and count(//testcase[@name='testFlipButtons']//failure) > 0"
+      score: 0
+      message: "testFlipButtons failed"
+      name: "App"
+    - selector: "count(//testcase[@name='testFlipButtons']) = 1 and count(//testcase[@name='testFlipButtons']//failure) = 0"
+      score: 15
+      message: "testFlipButtons succeeded"
+      name: "App"
